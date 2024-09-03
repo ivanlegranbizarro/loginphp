@@ -2,7 +2,9 @@
 require_once 'includes/config_session.inc.php';
 require_once 'includes/register_view.php';
 
+$registerData = $_SESSION['registerData'] ?? null;
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -39,14 +41,19 @@ require_once 'includes/register_view.php';
                 <form action="includes/register.php" method="POST">
                     <div class="mb-3">
                         <label for="username" class="form-label">Username</label>
-                        <input type="text" class="form-control" id="username" name="username" required>
+                        <!-- Pre-carga el valor de 'username' si está disponible en la sesión -->
+                        <input type="text" class="form-control" id="username" name="username" required
+                            value="<?php echo htmlspecialchars($registerData['username'] ?? '', ENT_QUOTES); ?>">
                     </div>
                     <div class="mb-3">
                         <label for="email" class="form-label">Email</label>
-                        <input type="email" class="form-control" id="email" name="email" required>
+                        <!-- Pre-carga el valor de 'email' si está disponible en la sesión -->
+                        <input type="email" class="form-control" id="email" name="email" required
+                            value="<?php echo htmlspecialchars($registerData['email'] ?? '', ENT_QUOTES); ?>">
                     </div>
                     <div class="mb-3">
                         <label for="password" class="form-label">Password</label>
+                        <!-- No se pre-carga la contraseña por motivos de seguridad -->
                         <input type="password" class="form-control" id="password" name="password" required>
                     </div>
                     <button type="submit" class="btn btn-success w-100">Registrarse</button>
@@ -57,6 +64,9 @@ require_once 'includes/register_view.php';
             </div>
         </div>
     </div>
+    <?php
+    unset($_SESSION['registerData']);
+    ?>
 </body>
 
 </html>

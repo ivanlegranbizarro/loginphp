@@ -27,6 +27,12 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
         if ($errors) {
             $_SESSION["errors_register"] = $errors;
+            $registerData = [
+                'username' => $username,
+                'email' => $email,
+                'password' => $password,
+            ];
+            $_SESSION['registerData'] = $registerData;
             header("Location: ../index.php");
             die();
         }
